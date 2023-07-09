@@ -8,12 +8,12 @@ public class MainManager : MonoBehaviour
 {
     public Brick BrickPrefab;
     public int LineCount = 6;
+    public int currentBest = 10;
     public Rigidbody Ball;
 
     public Text ScoreText;
     public Text bestScoreText;
     public GameObject GameOverText;
-    
     private bool m_Started = false;
     private int m_Points;
     
@@ -75,6 +75,19 @@ public class MainManager : MonoBehaviour
         GameOverText.SetActive(true);
 
         // Update Best Score 
-        
+        if(m_Points > currentBest)
+            UpdateBestScore();
+
+    }
+
+    public void UpdateBestScore()
+    {
+        string playerName = "fubar";
+        playerName = DataManager.Instance.playerName;
+        int score = 0;
+        score = m_Points;
+        bestScoreText.text = $"Best Score: {playerName}: {score}";
+
+        DataManager.Instance.SaveHighScore(m_Points, playerName);
     }
 }

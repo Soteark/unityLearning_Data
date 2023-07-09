@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class DataManager : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class DataManager : MonoBehaviour
     class SaveData
     {
         public string playerName;
+        public int highScore;
+        public string highPlayerName;
     }
 
     public void SavePlayerName()
@@ -35,5 +38,15 @@ public class DataManager : MonoBehaviour
     public void ReadPlayerName(string inputName)
     {
         playerName = inputName;
+    }
+
+    public void SaveHighScore(int highScore, string playerName)
+    {
+        SaveData data = new SaveData();
+        data.highScore = highScore;
+        data.highPlayerName = playerName;
+
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
     }
 }
