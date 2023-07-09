@@ -8,8 +8,16 @@ using UnityEditor;
 
 public class MenuManager : MonoBehaviour
 {
+    public DataManager dataMgr;
+
+    void Start()
+    {
+        dataMgr = GameObject.Find("DataManager").GetComponent<DataManager>();
+    }
+
     public void StartClick(int sceneIndex)
     {
+        dataMgr.SavePlayerName();
         SceneManager.LoadScene(sceneIndex);
     }
 

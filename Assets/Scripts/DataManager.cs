@@ -4,15 +4,36 @@ using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static DataManager Instance;
+    public string playerName;
+
+    private void Awake()
     {
-        
+        // Prevents Duplicate Data Managers.
+        if(Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    [System.Serializable]
+    class SaveData
     {
-        
+        public string playerName;
+    }
+
+    public void SavePlayerName()
+    {
+        SaveData data = new SaveData();
+        data.playerName = playerName;
+    }
+
+    public void ReadPlayerName(string inputName)
+    {
+        playerName = inputName;
     }
 }
